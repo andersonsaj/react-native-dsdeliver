@@ -1,12 +1,19 @@
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useCallback } from 'react';
+import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 const Header: React.FC = () => {
+  const {navigate} = useNavigation();
+    const handleOnPress = useCallback(() => {
+        navigate('Home');
+    },[]);
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={handleOnPress}>
+      <View style={styles.container}>
       <Image source={require('../assets/logo.png')} />
       <Text style={styles.text}>DS Delivery</Text>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
