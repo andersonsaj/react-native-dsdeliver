@@ -4,11 +4,8 @@ import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-n
 
 const Header: React.FC = () => {
   const {navigate} = useNavigation();
-    const handleOnPress = useCallback(() => {
-        navigate('Home');
-    },[]);
   return (
-    <TouchableWithoutFeedback onPress={handleOnPress}>
+    <TouchableWithoutFeedback onPress={() => navigate('Home')}>
       <View style={styles.container}>
       <Image source={require('../assets/logo.png')} />
       <Text style={styles.text}>DS Delivery</Text>

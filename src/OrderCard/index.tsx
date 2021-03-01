@@ -1,22 +1,40 @@
-import React, { useCallback } from 'react';
-import { Image, StyleSheet, Text, View } from "react-native";
-import { RectButton } from 'react-native-gesture-handler';
-import Header from '../Header';
+import React, { useCallback, useMemo } from 'react';
+import { StyleSheet, Text, View } from "react-native";
+import { Order } from '../types';
 
-const OrderCard: React.FC = () => {
-    const handOnPress = useCallback(() => {
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-    },[]);
+dayjs.locale('pt-br');
+dayjs.extend(relativeTime);
+
+type Props = {
+  order: Order;
+}
+
+const OrderCard: React.FC<Props> = ({order}) => {
+  const dateFromNow = useCallback((date: string) => {
+    return dayjs(date).fromNow();
+  },[])
+
+  const formatNumber = useCallback((value: number) => {
+    var n = `${value.toFixed(2)}`;
+
+ return n.replace(n.substring(n.indexOf('.'),n.indexOf('.')+1), ',');
+},[]);
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.orderName}> Pedido</Text>
-          <Text style={styles.orderPrice}> R$ 50,00</Text>
+          <Text style={styles.orderName}> Pedido {order.id}</Text>
+          <Text style={styles.orderPrice}>R$ {formatNumber(order.total)}</Text>
         </View>
-        <Text style={styles.text}>Há 30 min</Text>
+        <Text style={styles.text}>{dateFromNow(order.moment)}</Text>
         <View style={styles.productsList}>
-          <Text style={styles.text}>Pizza</Text>
+            {order.products.map(p => (
+              <Text key={p.id} style={styles.text}>{p.name}</Text>
+            ))}
         </View>
       </View>
     );

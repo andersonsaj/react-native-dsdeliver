@@ -6,9 +6,6 @@ import Header from '../Header';
 
 const Home: React.FC = () => {
     const {navigate} = useNavigation();
-    const handleOnPress = useCallback(() => {
-        navigate('Orders');
-    },[]);
 
     return (
       <>
@@ -19,7 +16,7 @@ const Home: React.FC = () => {
         <Text style={styles.subTitle}>Receba todos os pedidos do seu {'\n'}restaurante na palma da sua mão</Text>
       </View>
       <View style={styles.footer}>
-          <RectButton style={styles.button} onPress={handleOnPress}>
+          <RectButton style={styles.button} onPress={() => navigate('Orders')}>
               <Text style={styles.buttonText}>VER PEDIDOS</Text>
           </RectButton>
       </View>
